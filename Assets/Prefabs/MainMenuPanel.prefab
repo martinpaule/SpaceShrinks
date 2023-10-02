@@ -421,10 +421,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 1657196321263720851}
   m_HandleRect: {fileID: 5348256088159583958}
   m_Direction: 0
-  m_MinValue: 10
+  m_MinValue: 20
   m_MaxValue: 100
   m_WholeNumbers: 1
-  m_Value: 10
+  m_Value: 20
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2360,7 +2360,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 10
+  m_text: 20
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2523,6 +2523,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemiesSlider: {fileID: 1238062181368707316}
   planetsSlider: {fileID: 825974086443607423}
+  normalClickSound: {fileID: 8300000, guid: 59020c1564545ae4281511ff7b8d189c, type: 3}
 --- !u!1 &7153449145980612030
 GameObject:
   m_ObjectHideFlags: 0

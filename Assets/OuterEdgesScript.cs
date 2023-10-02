@@ -24,6 +24,17 @@ public class OuterEdgesScript : MonoBehaviour
     GameObject shrinkingTimerUI;
     GameManagerScript gameManagerScript;
 
+    public ParticleSystem PlanetExplodeParticle;
+
+    public AudioClip ExplosionSound;
+
+    public AudioClip ZoneDroneSound;
+
+    public AudioClip ZoneWarningSound;
+
+    bool playedWarningSound = false;
+
+
     public void initialSetup(Vector2 playerPos){
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
         GameSetupScript gameSetupScript = GameObject.Find("GameManager").GetComponent<GameSetupScript>();
@@ -56,10 +67,21 @@ public class OuterEdgesScript : MonoBehaviour
 
             shrinkingTimerUI.GetComponent<TextMeshProUGUI>().text = "SpaceShrink in "+ shrinkingCounter.ToString("F2") + "s";
 
+            if(shrinkingCounter <= 5.0f && !playedWarningSound){
+                AudioSource.PlayClipAtPoint(ZoneWarningSound, Camera.main.transform.position);
+                playedWarningSound = true;
+            }
+
             if(shrinkingCounter <= 0.0f){
                 shrinking = true;
                 shrinkingCounter = 3.0f;
                 shrinkingTimerUI.GetComponent<TextMeshProUGUI>().text = "!SPACE SHRINKING!";
+
+                //turn on zonedrone sound from my audio source
+                AudioSource myAudioSource = GetComponent<AudioSource>();
+                myAudioSource.clip = ZoneDroneSound;
+                myAudioSource.loop = true;
+                myAudioSource.Play();
             }
         }else{
 
@@ -67,7 +89,10 @@ public class OuterEdgesScript : MonoBehaviour
             
             if(shrinkingCounter <= 0.0f){
                 shrinking = false;
+                playedWarningSound = false;
                 shrinkingCounter = 40.0f;
+                AudioSource myAudioSource = GetComponent<AudioSource>();
+                myAudioSource.Stop();
             }
 
             if(innerRadius > 3.0f){
@@ -79,7 +104,11 @@ public class OuterEdgesScript : MonoBehaviour
 
             foreach(GameObject planet in gameManagerScript.AllPlanets){
                 if(Vector2.Distance(planet.transform.position, this.transform.position) > innerRadius){
-
+                    ParticleSystem particle = Instantiate(PlanetExplodeParticle, planet.transform.position, Quaternion.identity);
+                    particle.transform.position += new Vector3(0, 0, -1);
+                    particle.transform.rotation = Quaternion.Euler(90, 0, 0);
+                    particle.Play();
+                    AudioSource.PlayClipAtPoint(ExplosionSound, planet.transform.position);
                     GameObject planetRef = planet;
                     gameManagerScript.AllPlanets.Remove(planetRef);
                     Destroy(planetRef);

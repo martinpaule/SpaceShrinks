@@ -13,6 +13,9 @@ public class ColourChoiceScript : MonoBehaviour
     public void choosePlayerColour(){
         gameManager.playerColour = myButtonColour;
         myBG.updateValues(GetComponent<RectTransform>().position, myButtonColour);
+
+        AudioSource.PlayClipAtPoint(gameManager.NormalClickSound, Camera.main.transform.position);
+
     }
 
     // Start is called before the first frame update

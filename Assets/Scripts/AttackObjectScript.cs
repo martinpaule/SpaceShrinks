@@ -8,22 +8,24 @@ public class AttackObjectScript : MonoBehaviour
     public PlanetScript targetPlanet;
     public Color myColor;
 
-    float movementSpeed = 7.0f;
+    float movementSpeed = 3.0f;
 
     float resources;
 
-
+    public AudioClip attackSound;
 
     public void setupATKobject(PlanetScript target, Color ownerColor, float resourcesToTransfer){
         targetPlanet = target;
         myColor = ownerColor;
-        GetComponent<SpriteRenderer>().color = myColor;
+        //GetComponent<SpriteRenderer>().color = myColor;
         resources = resourcesToTransfer;
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        AudioSource.PlayClipAtPoint(attackSound, Camera.main.transform.position);
+
     }
 
     // Update is called once per frame

@@ -184,6 +184,7 @@ GameObject:
   - component: {fileID: 6562759088720262844}
   - component: {fileID: 527570872090808586}
   - component: {fileID: -7653463103881578896}
+  - component: {fileID: -584396930574821445}
   m_Layer: 0
   m_Name: Planet
   m_TagString: Untagged
@@ -275,11 +276,12 @@ MonoBehaviour:
   myText: {fileID: 0}
   resources: 0
   productionSpeed: 1
-  attackObjectPF: {fileID: 3658929698399477772, guid: 2da5ed9cdcfaaac4c964ccd13261a1a9, type: 3}
+  attackObjectPF: {fileID: 33854042470582521, guid: 2da5ed9cdcfaaac4c964ccd13261a1a9, type: 3}
   gameManager: {fileID: 0}
   closestPlanets: []
   upgradeCost: 30
   playerTakeoverSound: {fileID: 8300000, guid: 0ee857770141feb479b5a4f91daaa6f0, type: 3}
+  playerTakeoverFailSound: {fileID: 8300000, guid: 9c2535c76b060bb409dc5ee994d9ed1a, type: 3}
 --- !u!58 &527570872090808586
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -411,3 +413,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-584396930574821445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7826786778733091694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a764afabdd25d25449b91d01c9f0f570, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attacking: 0
+  ShipLevelOnePF: {fileID: 4288549714145694053, guid: 8207620d80c64d047a1c948aa8230cba, type: 3}
+  ShipLevelTwoPF: {fileID: 5474389514976469541, guid: 97107658012517d42a4c8675ba3cafa8, type: 3}
+  ShipLevelThreePF: {fileID: 4402023203075042761, guid: f460456a66a98c84f9795d62a56a12d3, type: 3}

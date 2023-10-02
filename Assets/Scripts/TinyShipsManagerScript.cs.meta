@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: a764afabdd25d25449b91d01c9f0f570
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - ShipLevelOnePF: {fileID: 4288549714145694053, guid: 8207620d80c64d047a1c948aa8230cba, type: 3}
+  - ShipLevelTwoPF: {fileID: 5474389514976469541, guid: 97107658012517d42a4c8675ba3cafa8, type: 3}
+  - ShipLevelThreePF: {fileID: 4402023203075042761, guid: f460456a66a98c84f9795d62a56a12d3, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

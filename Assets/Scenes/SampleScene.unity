@@ -1057,6 +1057,7 @@ MonoBehaviour:
   minZoom: 2
   maxZoom: 10
   uiManager: {fileID: 0}
+  dragging: 0
 --- !u!1 &760652121
 GameObject:
   m_ObjectHideFlags: 0
@@ -1734,6 +1735,8 @@ MonoBehaviour:
   selectingAttackTarget: 0
   winSound: {fileID: 8300000, guid: 70334db202da669498ad02d3e24a7427, type: 3}
   loseSound: {fileID: 8300000, guid: 417df62b8ab8baf428d6a01a8d1335aa, type: 3}
+  NormalClickSound: {fileID: 8300000, guid: 59020c1564545ae4281511ff7b8d189c, type: 3}
+  troopAttackPercentage: 0
 --- !u!114 &1705115283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1872,6 +1875,7 @@ GameObject:
   - component: {fileID: 1818506624}
   - component: {fileID: 1818506628}
   - component: {fileID: 1818506627}
+  - component: {fileID: 1818506629}
   m_Layer: 0
   m_Name: OuterEdgesManager
   m_TagString: Untagged
@@ -1905,6 +1909,10 @@ MonoBehaviour:
   shrinkSpeed: 2
   startedGame: 0
   shrinkingTimerUI_PF: {fileID: 4762313725216632595, guid: e8c7c3822893a6648aa978eb34bca082, type: 3}
+  PlanetExplodeParticle: {fileID: 7829539448464764136, guid: 490e273b4114bf042a4c6fabb3d172ad, type: 3}
+  ExplosionSound: {fileID: 8300000, guid: b8cbce43dc4a8d54ba5b8a2a381f6370, type: 3}
+  ZoneDroneSound: {fileID: 8300000, guid: 0b5649bc54ff2a74988a0a578935ebee, type: 3}
+  ZoneWarningSound: {fileID: 8300000, guid: f532a1e3b63f26a41813f778c6a8145d, type: 3}
 --- !u!4 &1818506626
 Transform:
   m_ObjectHideFlags: 0
@@ -2003,6 +2011,102 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!82 &1818506629
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1818506623}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

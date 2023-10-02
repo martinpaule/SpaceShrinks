@@ -24,6 +24,8 @@ public class CameraManager : MonoBehaviour
 
     OuterEdgesScript outerEdgesScript;
 
+    public bool dragging = false;
+
     public void startInitialZooming(Vector2 positionToZoomTO, bool setZoomToMax = true){
         initialZoomingToPlayer = true;
         initialZoomingToPlayerTarget = new Vector3(positionToZoomTO.x, positionToZoomTO.y, transform.position.z);
@@ -43,14 +45,32 @@ public class CameraManager : MonoBehaviour
     
     void handleDrag()
     {
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            dragging = false;
+            return;
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
+            if(uiManager.upgradeUI){
+                //if the cursor position is inside the position of the UpgradeUI rect, set dragging to false
+                if(RectTransformUtility.RectangleContainsScreenPoint(uiManager.upgradeUI.GetComponent<RectTransform>(), Input.mousePosition)){
+                    dragging = false;
+                    return;
+                }
+            }
+
+            dragging = true;
             dragOrigin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             LMBheldDownTime = 0;
             return;
         }
 
-        if (!Input.GetMouseButton(0)) return;
+        if (!Input.GetMouseButton(0) || !dragging) return;
+
+
 
         LMBheldDownTime += Time.deltaTime;
         if (LMBheldDownTime < 0.1f) return;

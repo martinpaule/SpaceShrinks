@@ -20,9 +20,13 @@ public class PlanetScript : MonoBehaviour
 
     public List<PlanetScript> closestPlanets = new List<PlanetScript>();
 
+    TinyShipsManagerScript tinyShipsManager;
+
     public float upgradeCost = 30;
     AudioSource myAudioSource; 
     public AudioClip playerTakeoverSound;
+
+    public AudioClip playerTakeoverFailSound;
 
 
     public void SetOwner(Color newOwner)
@@ -90,9 +94,9 @@ public class PlanetScript : MonoBehaviour
         Color playerColor = gameManager.playerColour;
         UImanager uiManager = GameObject.Find("Canvas").GetComponent<UImanager>();
 
-        if(gameManager.selectingAttackTarget){
+        if(gameManager.selectingAttackTarget && uiManager.selectedPlanet != this.gameObject){
 
-                SendAttack(uiManager.selectedPlanet.GetComponent<PlanetScript>(), this, uiManager.selectedPlanet.GetComponent<PlanetScript>().resources);
+                SendAttack(uiManager.selectedPlanet.GetComponent<PlanetScript>(), this, uiManager.selectedPlanet.GetComponent<PlanetScript>().resources * ((float)gameManager.troopAttackPercentage / 100.0f));
 
 
                 gameManager.selectingAttackTarget = false;
@@ -105,7 +109,12 @@ public class PlanetScript : MonoBehaviour
         if(owner == playerColor){
             if(uiManager.selectedPlanet == this.gameObject){
                 uiManager.selectedPlanet = null;
-                Destroy(uiManager.upgradeUI);
+                if(gameManager.selectingAttackTarget){
+                    gameManager.selectingAttackTarget = false;
+                    Destroy(GameObject.Find("SelectTargetTXT(Clone)"));
+                }else{
+                    Destroy(uiManager.upgradeUI);
+                }
             }else{
                 uiManager.selectedPlanet = this.gameObject;
 
@@ -113,8 +122,9 @@ public class PlanetScript : MonoBehaviour
                     Destroy(uiManager.upgradeUI);
                 }
                 uiManager.upgradeUI = Instantiate(uiManager.upgradeUI_PF, GameObject.Find("Canvas").transform);
+                //uiManager.upgradeUI.GetComponent<PlanetActionScript>().planetInQuestion = this;
                 GameObject UpgradeButton = GameObject.Find("UpgradeButton");
-                UpgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = "UPGRADE\n(" + upgradeCost.ToString() + ")";;
+                UpgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = "UPGRADE\n(" + upgradeCost.ToString() + ")";
 
                 //set position of UI to be right below the selected planet
                 uiManager.upgradeUI.GetComponent<RectTransform>().position = Camera.main.WorldToScreenPoint(transform.position) + new Vector3(0, -70, 0);
@@ -126,8 +136,15 @@ public class PlanetScript : MonoBehaviour
     {
         GameObject attackObject = Instantiate(attackObjectPF, from.transform.position, Quaternion.identity);
         GameObject atkTXT = Instantiate(from.GetComponentInChildren<TextMeshPro>().gameObject, attackObject.transform);
-        attackObject.GetComponent<AttackObjectScript>().setupATKobject(to, from.owner, from.resources);
-        from.resources = 0;
+        atkTXT.GetComponent<TextMeshPro>().text = ((int)resourcesToSend).ToString();
+        attackObject.GetComponent<AttackObjectScript>().setupATKobject(to, from.owner, resourcesToSend);
+        from.resources -= resourcesToSend;
+
+        TinyShipsManagerScript attackObjectShipsManager = attackObject.GetComponent<TinyShipsManagerScript>();
+        attackObjectShipsManager.SetupPooledObjects();
+        attackObjectShipsManager.setResourcesAmount((int)resourcesToSend);
+        attackObjectShipsManager.setAllShipsColor(from.owner);
+        attackObjectShipsManager.attacking = true;
     }
 
     public void upgradeProductionSpeed()
@@ -163,6 +180,14 @@ public class PlanetScript : MonoBehaviour
             SetOwner(attacker);
             resources = -resources;
 
+            if(tinyShipsManager == null){
+                tinyShipsManager = GetComponent<TinyShipsManagerScript>();
+                tinyShipsManager.SetupPooledObjects();
+            }
+            tinyShipsManager.setAllShipsColor(attacker);
+            tinyShipsManager.setResourcesAmount((int)resources);
+
+
             if(owner == gameManager.playerColour){
                 myAudioSource.clip = playerTakeoverSound;
                 myAudioSource.Play();
@@ -173,7 +198,10 @@ public class PlanetScript : MonoBehaviour
                     planet.GetComponent<PlanetScript>().getClosestPlanets();
                 }
             }
-        }
+        }else if(attacker == gameManager.playerColour){
+                myAudioSource.clip = playerTakeoverFailSound;
+                myAudioSource.Play();
+            }
         updateText();
 
 
@@ -236,12 +264,18 @@ public class PlanetScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        
         if(owner == Color.white){
             myText.color = Color.gray;
         }else{
             getClosestPlanets();
+            //add tinyShipsManager component to this object
+            tinyShipsManager = GetComponent<TinyShipsManagerScript>();
+            tinyShipsManager.SetupPooledObjects();
+            tinyShipsManager.setAllShipsColor(owner);
         }
-                myAudioSource = GetComponent<AudioSource>();
+        myAudioSource = GetComponent<AudioSource>();
 
     }
 
@@ -252,7 +286,10 @@ public class PlanetScript : MonoBehaviour
         if (owner != Color.white)
         {
             resources += productionSpeed * Time.deltaTime;
+            tinyShipsManager.setResourcesAmount((int)resources);
+
             updateText();
+
 
             if(owner != gameManager.playerColour){
                 AIupdate();

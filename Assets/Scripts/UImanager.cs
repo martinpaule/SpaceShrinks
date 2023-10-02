@@ -85,13 +85,13 @@ public class UImanager : MonoBehaviour
         ResultTXT.SetActive(true);
         congrTXT.SetActive(true);
         if(won){
-            congrTXT.GetComponentInChildren<TextMeshProUGUI>().text = "CONGRATULATIONS!";
+            congrTXT.GetComponentInChildren<TextMeshProUGUI>().text = "THE GALAXY IS YOURS!";
             ResultTXT.GetComponentInChildren<TextMeshProUGUI>().text = "YOU WON !!!";
             //set their colours to green
             congrTXT.GetComponentInChildren<TextMeshProUGUI>().color = Color.green;
             ResultTXT.GetComponentInChildren<TextMeshProUGUI>().color = Color.green;
         }else{
-            congrTXT.GetComponentInChildren<TextMeshProUGUI>().text = "AWW SHUCKS!";
+            congrTXT.GetComponentInChildren<TextMeshProUGUI>().text = "YOUR SPECIES WERE WIPED OUT!";
             ResultTXT.GetComponentInChildren<TextMeshProUGUI>().text = "YOU LOST! :(";
             //set their colours to red
             congrTXT.GetComponentInChildren<TextMeshProUGUI>().color = Color.red;

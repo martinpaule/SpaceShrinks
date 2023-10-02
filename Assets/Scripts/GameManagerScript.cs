@@ -17,10 +17,14 @@ public class GameManagerScript : MonoBehaviour
     public AudioClip winSound;
     public AudioClip loseSound;
 
+    public AudioClip NormalClickSound;
+
+    public int troopAttackPercentage;
+
     bool gameWinCheck(){
         foreach (GameObject planet in AllPlanets)
         {
-            if(planet.GetComponent<PlanetScript>().owner != playerColour){
+            if(planet.GetComponent<PlanetScript>().owner != playerColour && planet.GetComponent<PlanetScript>().owner != Color.white){
                 return false;
             }
         }
@@ -40,14 +44,12 @@ public class GameManagerScript : MonoBehaviour
     public void gameWinLoseCheck(){
         if(gameWinCheck()){
             UImanager uiManager = GameObject.Find("Canvas").GetComponent<UImanager>();
-            Debug.Log("You Win!");
             uiManager.toggleEndgameUI(true);
             uiManager.toggleExit();
             winLoseAudioSource.clip = winSound;
             winLoseAudioSource.Play();
         }else if(gameLoseCheck()){
             UImanager uiManager = GameObject.Find("Canvas").GetComponent<UImanager>();
-            Debug.Log("You Lose!");
             uiManager.toggleEndgameUI(false);
             uiManager.toggleExit();
             winLoseAudioSource.clip = loseSound;
